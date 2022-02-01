@@ -31,4 +31,5 @@ class Person {
                 ", salary =" + salary +
                 '}';
     }
+
 }
