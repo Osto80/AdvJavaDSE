@@ -4,7 +4,6 @@ package com.superdevs;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.IntFunction;
 import java.util.function.IntPredicate;
@@ -116,6 +115,8 @@ public class Main {
         // and another for (351'000 to 500'000). More advanced and/or efficient solutions are welcome.
         System.out.println("Prime numbers between 0 and 500'000:\n");
 
+        // Se över detta genrellt...
+
         //System.out.println(primeNumbers(500_000).count());
         AtomicLong sum1 = new AtomicLong();
         AtomicLong sum2 = new AtomicLong();
@@ -159,7 +160,7 @@ public class Main {
                     .filter(sieve.apply(i));
         return primeNum;
     }
-    /// När man vill börja från annat än noll.
+    /// När man vill börja från annat än noll. Funkar inte felfritt
     public static IntStream primeNumbers2(int start, int targetNum) {
         if (start < 1) {
             start++;
