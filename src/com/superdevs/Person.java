@@ -26,9 +26,9 @@ class Person {
     @Override
     public String toString() {
         return "Person {" +
-                " name='" + name + '\'' +
-                ", gender ='" + gender + '\'' +
-                ", salary =" + salary +
+                " name= '" + name + '\'' +
+                ", gender= '" + gender + '\'' +
+                ", salary= " + salary +
                 '}';
     }
 

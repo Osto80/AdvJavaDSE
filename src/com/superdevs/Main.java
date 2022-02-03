@@ -1,9 +1,9 @@
 package com.superdevs;
 
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.IntFunction;
 import java.util.function.IntPredicate;
@@ -33,22 +33,15 @@ public class Main {
                         new Person("Kristin", Gender.FEMALE, 26_200))
                 );
 
-        /*
-        Double avgSalaryMen = users
-                .stream()
-                .filter(men -> men.getGender().equals(Gender.MALE))
-                .map(Person::getSalary).collect(Collectors.averagingDouble(Double::doubleValue));
-        */
-
         // 1.1 - Average Salary related to gender
-        Double avgSalaryMen = users
+        double avgSalaryMen = users
                 .stream()
                 .filter(men -> men.getGender().equals(Gender.MALE))
                 .mapToDouble(Person::getSalary)
                 .summaryStatistics()
                 .getAverage();
 
-        Double avgSalaryWomen = users
+        double avgSalaryWomen = users
                 .stream()
                 .filter(women -> women.getGender().equals(Gender.FEMALE))
                 .mapToDouble(Person::getSalary)
@@ -65,7 +58,7 @@ public class Main {
                 .limit(1)
                 .toList();
 
-        // 1.3 - lowest Salary
+        // 1.3 - Lowest Salary
         List<Person> lowestSalary = users
                 .stream()
                 .sorted(Comparator.comparing(Person::getSalary))
@@ -76,36 +69,63 @@ public class Main {
         System.out.println("Highest Salary: " + highestSalary);
         System.out.println("Lowest Salary: " +lowestSalary);
 
+        // <<############# END OF PERSONS #############>>
+        // <<############# END OF PERSONS #############>>
+
+
+
+
         System.out.println("\n**** --SECOND SECTION-- ****\n");
         // 2 - Create a car factory using the factory pattern
         System.out.println("Factory Pattern:\n");
 
-        //CarFactory
+        CarFactory carFactory = new CarFactory();
+
+        Car tesla = carFactory.createCar("TESLA");
+        System.out.println(tesla.getBrand() + " was created. This is a " +tesla.getFuelType().toString().toLowerCase(Locale.ROOT) +" type car with a maximum speed of " +tesla.getMaxSpeed() +" km/h.");
+        Car volvo = carFactory.createCar("Volvo");
+        System.out.println(volvo.getBrand() + " was created. This is a " +volvo.getFuelType().toString().toLowerCase(Locale.ROOT) +" type car with a maximum speed of " +volvo.getMaxSpeed() +" km/h.");
+        Car volkswagen = carFactory.createCar("volkswagen");
+        System.out.println(volkswagen.getBrand() + " was created. This is a " +volkswagen.getFuelType().toString().toLowerCase(Locale.ROOT) +" type car with a maximum speed of " +volkswagen.getMaxSpeed() +" km/h.");
+        Car bmwE = carFactory.createCar("BMW-E");
+        System.out.println(bmwE.getBrand() + " was created. This is a " +bmwE.getFuelType().toString().toLowerCase(Locale.ROOT) +" type car with a maximum speed of " +bmwE.getMaxSpeed() +" km/h.");
+
+        tesla.engine();
+        volvo.engine();
+
+        // <<############# END OF CAR FACTORY #############>>
+        // <<############# END OF CAR FACTORY #############>>
+
+
+
 
         System.out.println("\n**** --THIRD SECTION-- ****\n");
         // 3 - Create a list of words. Using regex, pick out the words that contains
         // 2 or more vowels (english ie: a, e, i, o, u, y)
-        System.out.println("Vowels using RegEx:\n");
+        System.out.println("Vowels using RegEx (Regex filters for two or more vowels):\n");
 
         List<String> words = List.of(
                 "Table", "Shoe",
                 "Dog", "Bathroom",
                 "Ink", "Towel",
-                "Cat", "Art"
-
+                "Cat", "Art",
+                "Anvil", "Brick"
         );
 
-        //Pattern pattern = Pattern.compile("[aeiouy] n++", Pattern.CASE_INSENSITIVE);
-
         Predicate<String> vowelFilter = Pattern
-                .compile("([aeiouy][aeiouy])", Pattern.CASE_INSENSITIVE)
+                .compile("[aeiouy].*[aeiouy]", Pattern.CASE_INSENSITIVE)
                         .asPredicate();
 
         List<String> filteredList = words.stream()
                 .filter(vowelFilter)
                 .collect(Collectors.toList());
 
-        System.out.println(filteredList);
+        System.out.println("Original list of words: "+words);
+        System.out.println("Regex filtered list of words: "+filteredList);
+
+        // <<############# END OF REGEX #############>>
+        // <<############# END OF REGEX #############>>
+
 
 
 
@@ -115,9 +135,6 @@ public class Main {
         // and another for (351'000 to 500'000). More advanced and/or efficient solutions are welcome.
         System.out.println("Prime numbers between 0 and 500'000:\n");
 
-        // Se över detta genrellt...
-
-        //System.out.println(primeNumbers(500_000).count());
         AtomicLong sum1 = new AtomicLong();
         AtomicLong sum2 = new AtomicLong();
 
@@ -131,7 +148,6 @@ public class Main {
             @Override
             public void run() {
                 sum2.set(primeNumbers2(250001, 500000).count());
-
             }
         });
 
@@ -147,6 +163,7 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         System.out.println(sum1.get() + sum2.get());
     }
 
@@ -160,7 +177,8 @@ public class Main {
                     .filter(sieve.apply(i));
         return primeNum;
     }
-    /// När man vill börja från annat än noll. Funkar inte felfritt
+
+    /// När man vill börja från annat tal under 1000-tal blir det problem...
     public static IntStream primeNumbers2(int start, int targetNum) {
         if (start < 1) {
             start++;
@@ -174,10 +192,5 @@ public class Main {
             primeNum = primeNum
                     .filter(sieve.apply(i));
         return primeNum;
-
     }
-
-
-
-
 }
