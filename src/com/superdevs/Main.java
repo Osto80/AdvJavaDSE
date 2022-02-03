@@ -89,6 +89,8 @@ public class Main {
         System.out.println(volkswagen.getBrand() + " was created. This is a " +volkswagen.getFuelType().toString().toLowerCase(Locale.ROOT) +" type car with a maximum speed of " +volkswagen.getMaxSpeed() +" km/h.");
         Car bmwE = carFactory.createCar("BMW-E");
         System.out.println(bmwE.getBrand() + " was created. This is a " +bmwE.getFuelType().toString().toLowerCase(Locale.ROOT) +" type car with a maximum speed of " +bmwE.getMaxSpeed() +" km/h.");
+        Car bmw = carFactory.createCar("BMW");
+        System.out.println(bmw.getBrand() + " was created. This is a " +bmw.getFuelType().toString().toLowerCase(Locale.ROOT) +" type car with a maximum speed of " +bmw.getMaxSpeed() +" km/h.");
 
         tesla.engine();
         volvo.engine();
